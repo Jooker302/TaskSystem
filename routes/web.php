@@ -47,3 +47,7 @@ Route::get('assign-task', [AdminController::class, 'assign_task']);
 Route::post('store-assign-task',[AdminController::class, 'store_assign_task']);
 
 Route::get('view-task', [AdminController::class, 'view_task']);
+
+Route::get('status-deact/{id}', [AdminController::class, 'user_status_deact']);
+
+Route::get('status-act/{id}', [AdminController::class, 'user_status_act']);

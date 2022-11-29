@@ -30,5 +30,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/search-task', [AuthController::class, 'search_task']);
 });
 
-Route::post('/register', [AuthController::class, 'createUser']);
+// Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);

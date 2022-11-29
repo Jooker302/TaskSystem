@@ -73,4 +73,19 @@ class AdminController extends Controller
 
         return view('view-tasks')->with(['tasks'=>$tasks]);
     }
+
+
+    public function user_status_deact($id){
+        $user = User::find($id);
+        $user->user_status = 'blocked';
+        $user->update();
+        return redirect()->back();
+    }
+
+    public function user_status_act($id){
+        $user = User::find($id);
+        $user->user_status = null;
+        $user->update();
+        return redirect()->back();
+    }
 }

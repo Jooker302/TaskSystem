@@ -14,7 +14,7 @@
 
         <meta name="author" content="" />
 
-        <title>Dashboard </title>
+        <title>HTG Inspection Dashboard </title>
 
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
@@ -32,7 +32,7 @@
 
             <!-- Navbar Brand-->
 
-            <a class="navbar-brand ps-3" href="">TASK SYSTEM</a>
+            <a class="navbar-brand ps-3" href="">HTG INSPECTION</a>
 
             <!-- Sidebar Toggle-->
 
@@ -207,7 +207,7 @@
 
                         <div class="d-flex align-items-center justify-content-between small">
 
-                            <div class="text-muted">Copyright &copy; TaskSystem 2022</div>
+                            <div class="text-muted">Copyright &copy; HTG Inspection Admin 2022</div>
 
                             {{-- <div>
 

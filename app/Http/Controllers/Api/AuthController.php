@@ -85,6 +85,20 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+            // dd($user);
+            if($user->user_status == 'blocked'){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User is Deactivated by Admin',
+                ], 500);
+            }
+
+            if($user->status != 'user'){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User\'s Role is not User',
+                ], 500);
+            }
 
             return response()->json([
                 'status' => true,

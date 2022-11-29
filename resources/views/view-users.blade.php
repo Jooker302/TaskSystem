@@ -8,6 +8,7 @@
         {{-- <th scope="col">#</th> --}}
         <th scope="col">Name</th>
         <th scope="col">Email</th>
+        <th scope="col">Action</th>
         <th scope="col">Created At</th>
       </tr>
     </thead>
@@ -19,6 +20,11 @@
         {{-- <th scope="row">1</th> --}}
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
+        @if($user->user_status == 'blocked')
+            <td><a class="btn btn-success" href="{{url('status-act/'.$user->id)}}">Activate</a></td>
+        @else
+            <td><a class="btn btn-danger" href="{{url('status-deact/'.$user->id)}}">Deactivate</a></td>
+        @endif
         <td>{{$user->created_at}}</td>
       </tr>
       @endforeach
