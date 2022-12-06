@@ -56,7 +56,7 @@ class TaskController extends Controller
         $request->file('file')->move('assets/taskfiles',$filename);
         $taskfile->task_id = $request->task_id;
         $taskfile->user_id = $request->user_id;
-        $taskfile->file = $request->$filename;
+        $taskfile->file = $filename;
         $taskfile->save();
         return response()->json([
             'message' => 'File Uploaded',

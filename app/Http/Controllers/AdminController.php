@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Models\TaskFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -51,7 +52,10 @@ class AdminController extends Controller
         // $tasks = [];
         $i = 0;
         $task = Task::all();
+
+        // dd($task);
         foreach($task as $t){
+            $tasks[$i]['id'] = $t->id;
             $tasks[$i]['title'] = $t->title;
             $user_name = User::find($t->user_id);
             $tasks[$i]['username'] = $user_name->name;
@@ -65,13 +69,13 @@ class AdminController extends Controller
             $tasks[$i]['inspection_items'] = explode(' , ',$t->inspection_items);
             $i++;
         }
-
+        $taskfile=TaskFile::all();
         // dd($tasks);
         // foreach($tasks as $y){
         //     dd($y);
         // }
 
-        return view('view-tasks')->with(['tasks'=>$tasks]);
+        return view('view-tasks')->with(['tasks'=>$tasks, 'taskfiles'=>$taskfile]);
     }
 
 
