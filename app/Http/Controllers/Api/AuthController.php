@@ -103,7 +103,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user_id' => $user->id
             ], 200);
 
         } catch (\Throwable $th) {
@@ -121,5 +122,10 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'You are Logout Successfully'], 200);
+    }
+
+    public function profile(Request $request){
+        $user = User::find($request->id);
+        return response()->json(['data' => $user], 200);
     }
 }

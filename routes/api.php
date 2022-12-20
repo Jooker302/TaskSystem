@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('all-pending-task',[TaskController::class, 'all_pending_task']);
     Route::post('complete-task',[TaskController::class, 'store_complete_task']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/profile',[AuthController::class, 'profile']);
     Route::post('/upload-task-file', [TaskController::class, 'upload_task_file']);
     Route::post('/search-task', [TaskController::class, 'search_task']);
 });

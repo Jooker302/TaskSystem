@@ -53,7 +53,15 @@ Route::get('status-deact/{id}', [AdminController::class, 'user_status_deact']);
 
 Route::get('status-act/{id}', [AdminController::class, 'user_status_act']);
 
+Route::get('delete/{id}',[AdminController::class, 'user_delete']);
+
+Route::get('edit/{id}',[AdminController::class, 'edit_user']);
+
+Route::post('update',[AdminController::class, 'update_user']);
+
 
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
+
+Route::get('generate-spdf/{id}', [PDFController::class, 'generatePDFSpecific']);
 
 Route::get('test',[PDFController::class, 'test']);

@@ -34,6 +34,7 @@
                 @endforeach
             </ul>
         </td>
+        <td><a class="btn btn-success" href="{{url('generate-spdf/'.$task['id'])}}">Export</a></td>
       </tr>
       {{-- @php
           $k=0;

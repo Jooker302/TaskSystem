@@ -20,11 +20,15 @@
         {{-- <th scope="row">1</th> --}}
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
+        <td>
+            <a class="btn btn-primary" href="{{url('edit/'.$user->id)}}">Edit</a>
+            <a class="btn btn-danger" href="{{url('delete/'.$user->id)}}">Delete</a>
         @if($user->user_status == 'blocked')
-            <td><a class="btn btn-success" href="{{url('status-act/'.$user->id)}}">Activate</a></td>
+            <a class="btn btn-success" href="{{url('status-act/'.$user->id)}}">Activate</a>
         @else
-            <td><a class="btn btn-danger" href="{{url('status-deact/'.$user->id)}}">Deactivate</a></td>
+           <a class="btn btn-danger" href="{{url('status-deact/'.$user->id)}}">Deactivate</a>
         @endif
+    </td>
         <td>{{$user->created_at}}</td>
       </tr>
       @endforeach

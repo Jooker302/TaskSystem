@@ -92,4 +92,24 @@ class AdminController extends Controller
         $user->update();
         return redirect()->back();
     }
+
+    public function user_delete($id){
+        User::find($id)->delete();
+        return redirect()->back();
+    }
+
+    public function edit_user($id){
+        $user = User::find($id);
+        return view('update-user')->with(['user'=>$user]);
+    }
+
+    public function update_user(Request $request){
+        $user = User::find($request->id);
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        $user->status = $request->status;
+        $user->save();
+        return redirect('view-users');
+    }
 }
