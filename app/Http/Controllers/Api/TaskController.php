@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\TaskFile;
 use Illuminate\Http\Request;
+use File;
 
 class TaskController extends Controller
 {
@@ -50,10 +51,24 @@ class TaskController extends Controller
     }
 
     public function upload_task_file(Request $request){
+
+
+        // $response = array();
+        // if (!$request->has('imageData')) {
+        //     return ApiController::result([], 'imageData not found', 201);
+        // }
+        $imageData = $request->get('file');
+        // $userId = Auth::user()->id;
+        $filename = time().'.jpg';
+        $userPublicPath = 'assets/taskfiles';
+        $path = $userPublicPath . $filename;
+        File::put($path, base64_decode($imageData));
+
+
         $taskfile = new TaskFile;
-        $file = $request->file('file');
-        $filename = time().'.'.$file->getClientOriginalExtension();
-        $request->file('file')->move('assets/taskfiles',$filename);
+        // $file = $request->file('file');
+        // $filename = time().'.'.$file->getClientOriginalExtension();
+        // $request->file('file')->move('assets/taskfiles',$filename);
         $taskfile->task_id = $request->task_id;
         $taskfile->user_id = $request->user_id;
         $taskfile->file = $filename;
