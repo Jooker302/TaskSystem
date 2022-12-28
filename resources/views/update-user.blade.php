@@ -3,7 +3,7 @@
 @section('content')
 {{-- <h1>test</h1> --}}
 
-<form action="{{url('update')}}" method="POST" class="form" style="margin: 5%;">
+<form action="{{url('update')}}" method="POST" class="form" style="margin: 5%;" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" value="{{$user->id}}">
     <div class="form-group center" >
@@ -18,6 +18,10 @@
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Image</label>
+        <input type="file" name="image" class="form-control" id="image">
       </div>
       <input type="hidden" name="status" value="user">
       {{-- <div class="form-group">

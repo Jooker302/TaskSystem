@@ -16,10 +16,14 @@ class AdminController extends Controller
 
     public function store_user(Request $request){
         $user = new User;
+        $image = $request->file('image');
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->file('image')->move('assets/users',$imagename);
         $user->email = $request->email;
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        $user->image = 'https://etradeverse.com/test/TaskSystem/public/assets/users/'.$imagename;
         $user->save();
         return redirect()->back();
     }
@@ -109,6 +113,13 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        if($request->has('image')){
+            $image = $request->file('image');
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->file('image')->move('assets/users',$imagename);
+            $user->image = 'https://etradeverse.com/test/TaskSystem/public/assets/users/'.$imagename;
+        }
+
         $user->save();
         return redirect('view-users');
     }

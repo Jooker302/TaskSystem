@@ -5,7 +5,7 @@
 <table class="table table-striped table-bordered" style="margin: 5%;width: 80%">
     <thead>
       <tr>
-        {{-- <th scope="col">#</th> --}}
+        <th scope="col">Image</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Action</th>
@@ -17,7 +17,9 @@
 
 
       <tr>
-        {{-- <th scope="row">1</th> --}}
+        <th scope="row">
+            <img style="height: 200px; width: 200px;" src="{{$user->image}}" alt="">
+        </th>
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
         <td>
