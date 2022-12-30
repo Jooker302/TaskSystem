@@ -29,6 +29,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile',[AuthController::class, 'profile']);
     Route::post('/upload-task-file', [TaskController::class, 'upload_task_file']);
     Route::post('/search-task', [TaskController::class, 'search_task']);
+    Route::post('/inspection-items', [TaskController::class, 'inspection_items']);
+    Route::post('/questions', [TaskController::class, 'questions']);
+    Route::post('/inspection-items-status', [TaskController::class, 'inspection_items_status']);
+    Route::post('/questions-status', [TaskController::class, 'questions_status']);
 });
 
 // Route::post('/register', [AuthController::class, 'createUser']);

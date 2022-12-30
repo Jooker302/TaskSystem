@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InspectionItem;
+use App\Models\Question;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use DB;
+use View;
 
 class AdminController extends Controller
 {
@@ -39,15 +43,29 @@ class AdminController extends Controller
     }
 
     public function store_assign_task(Request $request){
+        // dd($request->all());
         // dd(implode(' , ',$request->inspection_items));
         $task = new Task;
         $task->title = $request->title;
         $task->user_id = $request->user_id;
         $task->description = $request->description;
         $task->client_name = $request->client_name;
-        $task->inspection_items = implode(' , ',$request->inspection_items);
+        // $task->inspection_items = implode(' , ',$request->inspection_items);
         $task->status = $request->status;
         $task->save();
+
+        foreach($request->inspection_image as $key => $image){
+            // $image = $request->file('vedio');
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $image->move('assets/inspectionItems',$imagename);
+            $inspection_itmes = new InspectionItem;
+            $inspection_itmes->task_id = $task->id;
+            $inspection_itmes->title = $request->inspection_items[$key];
+            $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
+            $inspection_itmes->save();
+
+        }
+
         return redirect()->back();
     }
 
@@ -122,5 +140,94 @@ class AdminController extends Controller
 
         $user->save();
         return redirect('view-users');
+    }
+
+    public function ajax_task(Request $request){
+        // dd($request->all());
+        $task = new Task;
+        $task->title = $request->title;
+        $task->user_id = $request->user_id;
+        $task->description = $request->description;
+        $task->client_name = $request->client_name;
+        // $task->inspection_items = implode(' , ',$request->inspection_items);
+        $task->status = $request->status;
+        $task->save();
+        $task_id = $task->id;
+
+        $inspection_items = View::make('ajax-inspection-items', compact('task_id'))->render();
+
+        return $inspection_items;
+    }
+
+    public function ajax_items(Request $request){
+        $image = $request->file('inspection_image');
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $image->move('assets/inspectionItems',$imagename);
+            $inspection_itmes = new InspectionItem;
+            $inspection_itmes->task_id = $request->task_id;
+            $inspection_itmes->i_title = $request->inspection_items;
+            $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
+            $inspection_itmes->save();
+            // $success = true;
+            $task_id = $request->task_id;
+            $inspection_items = InspectionItem::where('task_id',$task_id)->get();
+            $question = View::make('ajax-questions', compact('task_id','inspection_items'))->render();
+
+        return $question;
+    }
+
+    public function ajax_more_items(Request $request){
+        // dd($request->all());
+            $image = $request->file('inspection_image');
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $image->move('assets/inspectionItems',$imagename);
+            $inspection_itmes = new InspectionItem;
+            $inspection_itmes->task_id = $request->task_id;
+            $inspection_itmes->i_title = $request->inspection_items;
+            $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
+            $inspection_itmes->save();
+            $success = true;
+            $task_id = $request->task_id;
+            $inspection_items = View::make('ajax-inspection-items', compact('task_id','success'))->render();
+
+        return $inspection_items;
+    }
+
+    public function ajax_question(Request $request){
+        // dd($request->all());
+        $question = new Question;
+        $question->inspection_item_id = $request->inspection_item_id;
+        $question->question = $request->question;
+        $question->save();
+
+        return redirect('home');
+    }
+
+    public function ajax_more_question(Request $request){
+        // dd($request->all());
+        $question = new Question;
+        $question->inspection_item_id = $request->inspection_item_id;
+        $question->question = $request->question;
+        $question->save();
+
+        // return redirect('home');
+        $task_id = $request->task_id;
+        $inspection_items = InspectionItem::where('task_id',$task_id)->get();
+        $success = true;
+        $inspection_items = View::make('ajax-questions', compact('task_id','success','inspection_items'))->render();
+
+        return $inspection_items;
+    }
+
+
+    public function test(){
+        $task = Task::with('inspection_items')->where('id',5)->get();
+        // dd($task);
+        return  $task;
+        return response()->json([
+            'tasks' => $task,
+            'code' => 200,
+        ]);
+        // dd($task);
     }
 }
