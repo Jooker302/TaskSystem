@@ -9,33 +9,39 @@
       <tr>
         {{-- <th scope="col">#</th> --}}
         <th scope="col">Title</th>
-        <th scope="col">Username</th>
-        <th scope="col">Description</th>
-        <th scope="col">Client Name</th>
+        <th scope="col">Image</th>
+        {{-- <th scope="col">Description</th>
+        <th scope="col">Client Name</th> --}}
         <th scope="col">Status</th>
-        <th scope="col">Inspection Items</th>
+        <th scope="col">Questions</th>
       </tr>
     </thead>
     <tbody>
-        @foreach ($tasks as $task)
+        @foreach ($items as $item)
 
 
       <tr>
         {{-- <th scope="row">1</th> --}}
-        <td>{{$task['title']}}</td>
-        <td>{{$task['username']}}</td>
-        <td>{{$task['description']}}</td>
-        <td>{{$task['client_name']}}</td>
-        <td>{{$task['status']}}</td>
+        <td>{{$item->i_title}}</td>
+            {{-- <img style="height: 200px; width: 200px;" src="{{$user->image}}" alt=""> --}}
+            <td><img src="{{$item->image}}" style="height: 200px; width: 200px;" alt="No iMage" ></td>
+        {{-- <td>{{$task['description']}}</td> --}}
+        {{-- <td>{{$task['client_name']}}</td> --}}
         <td>
-            <a class="btn btn-primary" href="{{url('view-inspection-items/'.$task['id'])}}">View</a>
+            @if(!$item->status)
+                <p>N.A</p>
+            @else
+            {{$item->status}}</td>
+            @endif
+        <td>
+            <a class="btn btn-primary" href="{{url('view-questions/'.$item->id)}}">View</a>
             {{-- <ul> --}}
                 {{-- @foreach ($task['inspection_items'] as $ins_item) --}}
                     {{-- <li>{{}}</li> --}}
                 {{-- @endforeach --}}
             {{-- </ul> --}}
         </td>
-        <td><a class="btn btn-success" href="{{url('generate-spdf/'.$task['id'])}}">Export</a></td>
+        {{-- <td><a class="btn btn-success" href="{{url('generate-spdf/'.$task['id'])}}">Export</a></td> --}}
       </tr>
       {{-- @php
           $k=0;

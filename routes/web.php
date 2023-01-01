@@ -76,4 +76,6 @@ Route::post('/ajax_question',[AdminController::class,'ajax_question']);
 
 Route::post('/ajax_more_question',[AdminController::class,'ajax_more_question']);
 
+Route::get('view-inspection-items/{id}',[AdminController::class,'view_inspection_items']);
 
+Route::get('view-questions/{id}',[AdminController::class,'view_questions']);

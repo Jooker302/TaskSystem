@@ -230,4 +230,17 @@ class AdminController extends Controller
         ]);
         // dd($task);
     }
+
+
+    public function view_inspection_items($id){
+        $items = InspectionItem::where('task_id',$id)->get();
+        // dd($items);
+        return view('view-items')->with(['items'=>$items]);
+    }
+
+    public function view_questions($id){
+        $question = Question::where('inspection_item_id',$id)->get();
+        // dd($items);
+        return view('view-questions')->with(['questions'=>$question]);
+    }
 }
