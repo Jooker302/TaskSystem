@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use PDF;
 use File;
 use App\Models\Task;
+use App\Models\User;
 use App\Models\Question;
 use App\Models\TaskFile;
 use Illuminate\Http\Request;
 use App\Models\InspectionItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use PDF;
 
 class TaskController extends Controller
 {
@@ -200,6 +201,28 @@ class TaskController extends Controller
             'N.A' => $na,
             'code' => 200,
         ]);
+    }
+
+    public function view_task(Request $request){
+        $task = Task::find($request->task_id);
+        $user = ($task->user_id);
+        // dd($user);
+        $users = User::whereIn('id',$user)->get();
+        // dd($users);
+        foreach($users as $u){
+            $user_image[] = $u->image;
+        }
+        // $user_image = $users->image;
+        $data['tasks'] = $task;
+        $data['user_image'] = $user_image;
+
+        return response()->json([
+            // 'message' => 'Saved',
+            'data' => $data,
+            'code' => 200,
+        ]);
+
+
     }
 
 }
