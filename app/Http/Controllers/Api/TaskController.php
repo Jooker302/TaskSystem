@@ -11,6 +11,7 @@ use App\Models\TaskFile;
 use Illuminate\Http\Request;
 use App\Models\InspectionItem;
 use App\Http\Controllers\Controller;
+use App\Models\QuestionImage;
 use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
@@ -66,7 +67,7 @@ class TaskController extends Controller
         $imageData = $request->get('file');
         // $userId = Auth::user()->id;
         $filename = time().'.jpg';
-        $userPublicPath = 'assets/taskfiles';
+        $userPublicPath = 'assets/taskfiles/';
         $path = $userPublicPath . $filename;
         File::put($path, base64_decode($imageData));
 
@@ -223,6 +224,28 @@ class TaskController extends Controller
         ]);
 
 
+    }
+
+
+    public function add_question_image(Request $request){
+
+
+        $imageData = $request->get('image');
+        // $userId = Auth::user()->id;
+        $filename = time().'.jpg';
+        $userPublicPath = 'assets/questions/';
+        $path = $userPublicPath . $filename;
+        File::put($path, base64_decode($imageData));
+
+        $questionimage = new QuestionImage;
+        $questionimage->question_id = $request->question_id;
+        $questionimage->image = 'https://etradeverse.com/test/TaskSystem/public/'.$path;
+        $questionimage->save();
+        return response()->json([
+            'message' => 'Saved',
+            // 'data' => $data,
+            'code' => 200,
+        ]);
     }
 
 }
