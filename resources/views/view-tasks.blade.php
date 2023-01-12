@@ -34,7 +34,16 @@
         </td>
         <td>{{$task['description']}}</td>
         <td>{{$task['client_name']}}</td>
-        <td>{{$task['status']}}</td>
+        <td>
+            @if(isset($task->status))
+                @if ($task->status == 0)
+                    Not Completed
+                @else
+                    Completed
+                @endif
+
+
+            @endif</td>
         <td>
             <a class="btn btn-primary" href="{{url('view-inspection-items/'.$task['id'])}}">View</a>
             {{-- <ul> --}}

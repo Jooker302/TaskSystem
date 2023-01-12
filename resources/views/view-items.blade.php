@@ -10,8 +10,8 @@
         {{-- <th scope="col">#</th> --}}
         <th scope="col">Title</th>
         <th scope="col">Image</th>
-        {{-- <th scope="col">Description</th>
-        <th scope="col">Client Name</th> --}}
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
         <th scope="col">Status</th>
         <th scope="col">Questions</th>
       </tr>
@@ -25,8 +25,8 @@
         <td>{{$item->i_title}}</td>
             {{-- <img style="height: 200px; width: 200px;" src="{{$user->image}}" alt=""> --}}
             <td><img src="{{$item->image}}" style="height: 200px; width: 200px;" alt="No iMage" ></td>
-        {{-- <td>{{$task['description']}}</td> --}}
-        {{-- <td>{{$task['client_name']}}</td> --}}
+        <td>{{$task->start_date}}</td>
+        <td>{{$task->end_date}}</td>
         <td>
             @if(!$item->status)
                 <p>N.A</p>
