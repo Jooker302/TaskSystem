@@ -119,7 +119,7 @@
     }
     // selWeight.push($(this).val());
 });
-alert(selWeight);
+// alert(selWeight);
         // alert(arr);
         // alert(user_id);
         // var title = document.getElementById("title").value;

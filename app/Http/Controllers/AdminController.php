@@ -73,25 +73,25 @@ class AdminController extends Controller
 
     public function view_task(){
         // $tasks = [];
-        $i = 0;
-        $task = Task::all();
+        // $i = 0;
+        $tasks = Task::all();
 
         // dd($task);
-        foreach($task as $t){
-            $tasks[$i]['id'] = $t->id;
-            $tasks[$i]['title'] = $t->title;
-            $user_name = User::find($t->user_id);
-            $tasks[$i]['username'] = $user_name->name;
-            $tasks[$i]['description'] = $t->description;
-            $tasks[$i]['client_name'] = $t->client_name;
-            if($t->status!=0){
-                $tasks[$i]['status'] = 'Completed';
-            }else{
-                $tasks[$i]['status'] = 'Not Completed';
-            }
-            $tasks[$i]['inspection_items'] = explode(' , ',$t->inspection_items);
-            $i++;
-        }
+        // foreach($task as $t){
+        //     $tasks[$i]['id'] = $t->id;
+        //     $tasks[$i]['title'] = $t->title;
+        //     $user_name = User::find($t->user_id);
+        //     // $tasks[$i]['username'] = $user_name->name;
+        //     $tasks[$i]['description'] = $t->description;
+        //     $tasks[$i]['client_name'] = $t->client_name;
+        //     if($t->status!=0){
+        //         $tasks[$i]['status'] = 'Completed';
+        //     }else{
+        //         $tasks[$i]['status'] = 'Not Completed';
+        //     }
+        //     $tasks[$i]['inspection_items'] = explode(' , ',$t->inspection_items);
+        //     $i++;
+        // }
         $taskfile=TaskFile::all();
         // dd($tasks);
         // foreach($tasks as $y){

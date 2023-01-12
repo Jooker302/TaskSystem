@@ -23,7 +23,15 @@
       <tr>
         {{-- <th scope="row">1</th> --}}
         <td>{{$task['title']}}</td>
-        <td>{{$task['username']}}</td>
+        <td>
+            @foreach ($task->user_id as $user)
+                @php
+                    $username = App\Models\User::find($user);
+                @endphp
+                {{$username->name}}
+                <br>
+            @endforeach
+        </td>
         <td>{{$task['description']}}</td>
         <td>{{$task['client_name']}}</td>
         <td>{{$task['status']}}</td>
