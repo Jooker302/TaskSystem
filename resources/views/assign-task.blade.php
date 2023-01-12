@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Select User</label>
-      <select name="user_id" id="user_id" class="form-control" required>
+      <select name="user_id[]" id="user_id" class="form-control dynamic-user-id" required>
             <option value="">Select User</option>
         @foreach ($users as $user)
             <option value="{{$user->id}}">{{$user->name}} / {{$user->email}}</option>
@@ -23,6 +23,12 @@
       </select>
       {{-- <input type="text" name="name" class="form-control" id="name" placeholder="Name"> --}}
     </div>
+
+    <div class="field_wrapper"></div>
+
+    <a style="display: inline-block; margin:1%" href="javascript:void(0);" class="add_button btn-success" title="Add field">+Click to Add</a>
+
+
 
     <div class="form-group">
         <label for="exampleInputPassword1">Client Name</label>
@@ -46,7 +52,7 @@
     <br>
 
 
-    <div class="field_wrapper">
+
 
     </div> --}}
 
@@ -76,7 +82,7 @@
         // var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
         var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div ><input type="text" name="inspection_items[]" class="form-control" id="inspection_items" placeholder="Inspection Items" style="width: 60%; display:inline"><br><br><input type="file" name="inspection_image[]" class="form-control" id="inspection_items" placeholder="Inspection Items" style="width: 60%; display:inline"><br></div>';
+        var fieldHTML = '<div class="form-group"><select name="user_id[]" id="user_id" class="form-control dynamic-user-id" required><option value="">Select User</option>@foreach ($users as $user)<option value="{{$user->id}}">{{$user->name}} / {{$user->email}}</option>@endforeach</select></div>';
         // var x = 1; //Initial field counter is 1
 
         //Once add button is clicked
@@ -91,18 +97,33 @@
         function next_items(){
         // $("form").submit();
         document.getElementById("title").required = true;
-        document.getElementById("user_id").attributes["required"] = "";
+        // document.getElementById("user_id").attributes["required"] = "";
         document.getElementById("client_name").attributes["required"] = "";
         document.getElementById("description").attributes["required"] = "";
         document.getElementById("status").attributes["required"] = "";
 
         var title = document.getElementById("title").value;
-        var user_id = document.getElementById("user_id").value;
+        // var user_id = document.getElementById("user_id").value;
         var client_name = document.getElementById("client_name").value;
         var description = document.getElementById("description").value;
         var status = document.getElementById("status").value;
+        // var arr = $('input[name="user_id[]"]').map(function () {
+
+        //     // alert(this.value);
+        //     return this.value; // $(this).val()
+        // }).get();
+        var selWeight = [];
+        $('.dynamic-user-id').each(function() {
+             if ($(this).val() != '') {
+        selWeight.push($(this).val());
+    }
+    // selWeight.push($(this).val());
+});
+alert(selWeight);
+        // alert(arr);
+        // alert(user_id);
         // var title = document.getElementById("title").value;
-        if(!title || !user_id || !client_name || !description){
+        if(!title || !client_name || !description){
             // console.log("yes");
             alert("Fill the Fields");
         }else{
@@ -114,7 +135,7 @@
                 data: {
                     '_token': '{{ csrf_token() }}',
                     'title': title,
-                    'user_id': user_id,
+                    'user_id': selWeight,
                     'client_name': client_name,
                     'description': description,
                     'status': status
