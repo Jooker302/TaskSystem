@@ -18,7 +18,7 @@ class TaskController extends Controller
 {
     public function all_task(Request $request){
         // dd($request->all());
-        $tasks = Task::where('user_id',$request->user_id)->first();
+        $tasks = Task::where('user_id','like', '%'.$request->user_id.'%')->get();
         // $tasks = Task::all()->inspection_items;
         return response()->json([
             'tasks' => $tasks,
@@ -29,7 +29,7 @@ class TaskController extends Controller
 
     public function all_complete_task(Request $request){
         // dd($request->all());
-        $tasks = Task::where('user_id',$request->user_id)->where('status',1)->get();
+        $tasks = Task::where('user_id','like', '%'.$request->user_id.'%')->where('status',1)->get();
         return response()->json([
             'tasks' => $tasks,
             'code' => 200,
@@ -39,7 +39,7 @@ class TaskController extends Controller
 
     public function all_pending_task(Request $request){
         // dd($request->all());
-        $tasks = Task::where('user_id',$request->user_id)->where('status',0)->get();
+        $tasks = Task::where('user_id','like', '%'.$request->user_id.'%')->where('status',0)->get();
         return response()->json([
             'tasks' => $tasks,
             'code' => 200,
@@ -48,7 +48,7 @@ class TaskController extends Controller
     }
 
     public function store_complete_task(Request $request){
-        $task = Task::where('id', $request->task_id)->where('user_id', $request->user_id)->first();
+        $task = Task::where('id', $request->task_id)->where('user_id','like', '%'.$request->user_id.'%')->first();
         $task->status = 1;
         $task->update();
         return response()->json([
@@ -88,7 +88,7 @@ class TaskController extends Controller
     }
 
     public function search_task(Request $request){
-        $tasks = Task::where('user_id', $request->user_id)->where('title', 'LIKE', '%' . $request->title . '%')->get();
+        $tasks = Task::where('user_id','like', '%'.$request->user_id.'%')->where('title', 'LIKE', '%' . $request->title . '%')->get();
         return response()->json([
             'tasks' => $tasks,
             'code' => 200,
