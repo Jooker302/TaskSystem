@@ -371,35 +371,80 @@ border: 0;
         <th scope="col">Description</th>
         <th scope="col">Client Name</th>
         <th scope="col">Status</th>
-        <th scope="col">Inspection Items</th>
+        {{-- <th scope="col">Inspection Items</th> --}}
       </tr>
     </thead>
     <tbody>
-        @foreach ($tasks as $task)
+        {{-- @foreach ($tasks as $task) --}}
 
 
       <tr>
         {{-- <th scope="row">1</th> --}}
-        <td>{{$task['title']}}</td>
-        <td>{{$task['username']}}</td>
-        <td>{{$task['description']}}</td>
-        <td>{{$task['client_name']}}</td>
-        <td>{{$task['status']}}</td>
-        <td>
-            <ul>
-                @foreach ($task['inspection_items'] as $ins_item)
-                    <li>{{$ins_item}}</li>
-                @endforeach
-            </ul>
-        </td>
+        <td>{{$tasks->title}}</td>
+        <td>{{$tasks->username}}</td>
+        <td>{{$tasks->description}}</td>
+        <td>{{$tasks->client_name}}</td>
+        <td>{{$tasks->status}}</td>
+        {{-- <td> --}}
+
+        {{-- </td> --}}
       </tr>
-      @php
+      </table>
+      <h2 style="text-align:center"> Inspection Item</h2>
+      <table class="table table-striped table-bordered" style="margin: 5%;width: 80%; margin-top:0;">
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Image</th>
+            <th>Question</th>
+        </tr>
+            @foreach ($inspectionitem as $ins_item)
+                    <tr>
+                    <td>{{$ins_item->i_title}}</td>
+                    <td>{{$ins_item->status}}</td>
+                    <td>{{$ins_item->start_date}}</td>
+                    <td>{{$ins_item->end_date}}</td>
+                    <td> <img style="height: 200px; width: 200px;" src="{{asset($ins_item->image)}}" alt="No image"></td>
+                    <td>
+                        @foreach ($question as $item)
+                            @if($item->inspection_item_id == $ins_item->id)
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{$item->question}}</td>
+                                        <td>{{$item->status}}</td>
+                                    </tr>
+                                </table>
+
+                            @endif
+                        @endforeach
+                    </td>
+                    </tr>
+                @endforeach
+      </table>
+                <h2 style="text-align:center"> Task Images</h2>
+    <table class="table table-striped table-bordered" style="margin: 5%;width: 80%; margin-top:0;">
+
+            <tr>
+                <td>
+                    @foreach ($taskfiles as $item)
+                        <img src="{{asset($item->file)}}" alt="">
+                    @endforeach
+                </td>
+            </tr>
+    </table>
+      {{-- @php
           $k=0;
       @endphp
         @foreach ($taskfiles as $taskfile)
 
 
-      @if ($taskfile->task_id == $task['id'])
+      @if ($taskfile->task_id == $tasks->id)
 
       @if($k==0)
         <tr>
@@ -412,14 +457,14 @@ border: 0;
 
         <tr>
             <td colspan="6">
-                {{-- <div style="height: 400px; width: 400px; position:relative"> --}}
+
                     <img style="height: 200px; width: 200px;" src="assets/taskfiles/{{$taskfile->file}}" alt="">
-                {{-- </div> --}}
+
             </td>
         </tr>
         @endif
-      @endforeach
-      @endforeach
+      @endforeach --}}
+      {{-- @endforeach --}}
       {{-- <tr>
         <th scope="row">2</th>
         <td>Jacob</td>
@@ -432,8 +477,8 @@ border: 0;
         <td>the Bird</td>
         <td>@twitter</td>
       </tr> --}}
-    </tbody>
-  </table>
+    {{-- </tbody> --}}
+  {{-- </table> --}}
 
 </body>
 </html>

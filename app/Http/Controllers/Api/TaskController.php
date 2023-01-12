@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\InspectionItem;
-use App\Models\Question;
+use File;
 use App\Models\Task;
+use App\Models\Question;
 use App\Models\TaskFile;
 use Illuminate\Http\Request;
-use File;
+use App\Models\InspectionItem;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class TaskController extends Controller
 {
@@ -123,6 +125,65 @@ class TaskController extends Controller
         $questions->save();
         return response()->json([
             'message' => 'Updated',
+            'code' => 200,
+        ]);
+    }
+
+    public function pdf_generate(Request $request){
+
+        // $task = Task::where('id',$request->task_id)->get();
+
+        $tasks = Task::find($request->task_id);
+        $ins = InspectionItem::where('task_id',$tasks->id)->get();
+        foreach($ins as $i){
+            $ins_id[] = $i->id;
+        }
+        $question = Question::whereIn('inspection_item_id',$ins_id)->get();
+
+        $taskfile=TaskFile::where('task_id',$tasks->id)->get();
+        // dd($task);
+        // foreach($task as $t){
+        //     $tasks[$i]['id'] = $t->id;
+        //     $tasks[$i]['title'] = $t->title;
+        //     $user_name = User::find($t->user_id);
+        //     $tasks[$i]['username'] = $user_name->name;
+        //     $tasks[$i]['description'] = $t->description;
+        //     $tasks[$i]['client_name'] = $t->client_name;
+        //     if($t->status!=0){
+        //         $tasks[$i]['status'] = 'Completed';
+        //     }else{
+        //         $tasks[$i]['status'] = 'Not Completed';
+        //     }
+        //     $tasks[$i]['inspection_items'] = explode(' , ',$t->inspection_items);
+        //     $i++;
+        // }
+        // $taskfile=TaskFile::all();
+
+        $data = [
+            'tasks'=>$tasks,
+            'taskfiles'=>$taskfile ,
+            'inspectionitem' => $ins,
+            'question' => $question,
+        ];
+
+        $pdf = PDF::loadView('pdfview', $data);
+        // return $pdf->download('Tasks.pdf');
+
+        // $pdf = PDF::loadView('pdfview', $data)->save('public/assets/pdf/tasks.pdf');
+        // return PDF::loadHTML('<h1>Test</h1> ')->save('/path//my_stored_file.pdf');
+
+
+
+        // Storage::put('assets/pdf/task.pdf', $pdf->output());
+
+        // $path = public_path('');
+    $fileName =  'tasks.pdf' ;
+    $pdf->save( 'assets/'. $fileName);
+    // return $pdf->download($fileName);
+
+        return response()->json([
+            'message' => 'Saved',
+            'data' => 'https://etradeverse.com/test/TaskSystem/public/assets/tasks.pdf',
             'code' => 200,
         ]);
     }

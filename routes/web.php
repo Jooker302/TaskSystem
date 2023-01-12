@@ -64,7 +64,7 @@ Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 Route::get('generate-spdf/{id}', [PDFController::class, 'generatePDFSpecific']);
 
-Route::get('test',[AdminController::class, 'test']);
+Route::get('test',[PDFController::class, 'test']);
 
 Route::post('ajax_task',[AdminController::class,'ajax_task']);
 

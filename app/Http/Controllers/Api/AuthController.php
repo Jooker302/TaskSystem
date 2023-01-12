@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use File;
 
 class AuthController extends Controller
 {
@@ -127,5 +128,21 @@ class AuthController extends Controller
     public function profile(Request $request){
         $user = User::find($request->id);
         return response()->json(['data' => $user], 200);
+    }
+
+    public function change_image(Request $request){
+        $user = User::find($request->user_id);
+        // $user->image =
+        $imageData = $request->get('image');
+        // $userId = Auth::user()->id;
+        $filename = time().'.jpg';
+        $userPublicPath = 'assets/users/';
+        $path = $userPublicPath . $filename;
+        File::put($path, base64_decode($imageData));
+        $user->image = 'https://etradeverse.com/test/TaskSystem/public/'.$path;
+        // $user->image = 'test';
+        $user->save();
+
+        return response()->json(['message' => 'success'], 200);
     }
 }

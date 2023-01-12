@@ -166,6 +166,8 @@ class AdminController extends Controller
             $inspection_itmes = new InspectionItem;
             $inspection_itmes->task_id = $request->task_id;
             $inspection_itmes->i_title = $request->inspection_items;
+            $inspection_itmes->start_date = $request->start_date;
+            $inspection_itmes->end_date = $request->end_date;
             $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
             $inspection_itmes->save();
             // $success = true;
@@ -177,13 +179,15 @@ class AdminController extends Controller
     }
 
     public function ajax_more_items(Request $request){
-        // dd($request->all());
+        dd($request->all());
             $image = $request->file('inspection_image');
             $imagename = time().'.'.$image->getClientOriginalExtension();
             $image->move('assets/inspectionItems',$imagename);
             $inspection_itmes = new InspectionItem;
             $inspection_itmes->task_id = $request->task_id;
             $inspection_itmes->i_title = $request->inspection_items;
+            $inspection_itmes->start_date = $request->start_date;
+            $inspection_itmes->end_date = $request->end_date;
             $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
             $inspection_itmes->save();
             $success = true;
