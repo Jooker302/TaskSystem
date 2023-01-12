@@ -25,8 +25,8 @@
         <td>{{$item->i_title}}</td>
             {{-- <img style="height: 200px; width: 200px;" src="{{$user->image}}" alt=""> --}}
             <td><img src="{{$item->image}}" style="height: 200px; width: 200px;" alt="No iMage" ></td>
-        <td>{{$task->start_date}}</td>
-        <td>{{$task->end_date}}</td>
+        <td>{{$item->start_date}}</td>
+        <td>{{$item->end_date}}</td>
         <td>
             @if(!$item->status)
                 <p>N.A</p>

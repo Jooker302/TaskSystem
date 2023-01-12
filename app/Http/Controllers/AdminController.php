@@ -180,7 +180,7 @@ class AdminController extends Controller
     }
 
     public function ajax_more_items(Request $request){
-        dd($request->all());
+        // dd($request->all());
             $image = $request->file('inspection_image');
             $imagename = time().'.'.$image->getClientOriginalExtension();
             $image->move('assets/inspectionItems',$imagename);

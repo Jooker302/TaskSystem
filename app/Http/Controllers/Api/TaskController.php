@@ -188,4 +188,18 @@ class TaskController extends Controller
         ]);
     }
 
+
+    public function check_inspection_items_status(Request $request){
+        $passed = Question::where('inspection_item_id',$request->inspection_items_id)->where('q_status','pass')->count();
+        $failed = Question::where('inspection_item_id',$request->inspection_items_id)->where('q_status','fail')->count();
+        $na = Question::where('inspection_item_id',$request->inspection_items_id)->where('q_status',null)->count();
+        return response()->json([
+            // 'message' => 'Saved',
+            'Passed' => $passed,
+            'Failed' => $failed,
+            'N.A' => $na,
+            'code' => 200,
+        ]);
+    }
+
 }
