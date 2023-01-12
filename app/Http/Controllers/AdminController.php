@@ -25,6 +25,7 @@ class AdminController extends Controller
         $request->file('image')->move('assets/users',$imagename);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->trade = $request->trade;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
         $user->image = 'https://etradeverse.com/test/TaskSystem/public/assets/users/'.$imagename;
