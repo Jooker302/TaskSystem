@@ -92,3 +92,5 @@ Route::post('update-inspection-items',[AdminController::class,'update_inspection
 
 Route::get('final-approve/{id}',[AdminController::class,'final_approve']);
 
+Route::get('final-unapprove/{id}',[AdminController::class,'final_unapprove']);
+

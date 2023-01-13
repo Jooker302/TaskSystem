@@ -321,4 +321,11 @@ class AdminController extends Controller
         $task->save();
         return redirect()->back();
     }
+
+    public function final_unapprove($id){
+        $task = Task::find($id);
+        $task -> status = 0;
+        $task->save();
+        return redirect()->back();
+    }
 }
