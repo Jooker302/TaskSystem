@@ -403,7 +403,12 @@ border: 0;
             @foreach ($inspectionitem as $ins_item)
                     <tr>
                     <td>{{$ins_item->i_title}}</td>
-                    <td>{{$ins_item->status}}</td>
+                    <td>@if ($ins_item->status == null)
+                        Not Completed
+                        @else
+                        {{$ins_item->status}}
+                        @endif
+                        </td>
                     <td>{{$ins_item->start_date}}</td>
                     <td>{{$ins_item->end_date}}</td>
                     <td> <img style="height: 200px; width: 200px;" src="{{asset($ins_item->image)}}" alt="No image"></td>
@@ -417,7 +422,14 @@ border: 0;
                                     </tr>
                                     <tr>
                                         <td>{{$item->question}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td>
+                                            @if ($item->status == null)
+                                                Not Completed
+                                            @else
+                                                {{$item->status}}
+                                            @endif
+
+                                        </td>
                                     </tr>
                                 </table>
 
