@@ -248,4 +248,77 @@ class AdminController extends Controller
         // dd($items);
         return view('view-questions')->with(['questions'=>$question]);
     }
+
+    public function delete_task($id){
+        $inspection_items = InspectionItem::where('task_id',$id)->get();
+        foreach($inspection_items as $items){
+            $ids[] = $items->id;
+        }
+        $questions = Question::whereIn('inspection_item_id',$ids)->delete();
+        // $questions->delete();
+        $inspection_items = InspectionItem::where('task_id',$id)->delete();
+        Task::find($id)->delete();
+
+
+
+        return redirect()->back();
+    }
+
+
+    public function edit_task($id){
+        $users = User::all();
+        $task = Task::find($id);
+        return view('edit-task')->with(['users' => $users, 'task' =>$task]);
+    }
+
+    public function update_task(Request $request){
+        // dd($request->all());
+        $task = Task::find($request->task_id);
+        $task->title = $request->title;
+        $task->user_id = $request->user_id;
+        $task->description = $request->description;
+        $task->client_name = $request->client_name;
+        // $task->inspection_items = implode(' , ',$request->inspection_items);
+        $task->status = $request->status;
+        $task->save();
+
+        return redirect('view-task');
+    }
+
+    public function edit_inspection_items($id){
+        $inspection_item = InspectionItem::find($id);
+
+        return view('edit-inspection-items')->with(['inspection_item' => $inspection_item]);
+    }
+
+    public function update_inspection_items(Request $request){
+        // dd($request->all());
+        $inspection_itmes = InspectionItem::find($request->inspection_item_id);
+        if(isset($request->inspection_image)){
+            dd('here');
+            $image = $request->file('inspection_image');
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $image->move('assets/inspectionItems',$imagename);
+            $inspection_itmes->image = 'https://etradeverse.com/test/TaskSystem/public/assets/inspectionItems/'.$imagename;
+        }
+
+            $inspection_itmes->task_id = $request->task_id;
+            $inspection_itmes->i_title = $request->inspection_items;
+            $inspection_itmes->start_date = $request->start_date;
+            $inspection_itmes->end_date = $request->end_date;
+
+            $inspection_itmes->save();
+
+
+            return redirect('view-inspection-items/'.$request->task_id);
+
+    }
+
+
+    public function final_approve($id){
+        $task = Task::find($id);
+        $task -> status = 1;
+        $task->save();
+        return redirect()->back();
+    }
 }

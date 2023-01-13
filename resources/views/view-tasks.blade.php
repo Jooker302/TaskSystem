@@ -14,6 +14,8 @@
         <th scope="col">Client Name</th>
         <th scope="col">Status</th>
         <th scope="col">Inspection Items</th>
+        <th scope="col"></th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -38,8 +40,10 @@
             @if(isset($task->status))
                 @if ($task->status == 0)
                     Not Completed
-                @else
+                @elseif($task->status == 1)
                     Completed
+                @else
+                    <a class="btn btn-success" href="{{url('final-approve/'.$task->id)}}">Approve</a>
                 @endif
 
 
@@ -53,6 +57,9 @@
             {{-- </ul> --}}
         </td>
         <td><a class="btn btn-success" href="{{url('generate-spdf/'.$task['id'])}}">Export</a></td>
+        <td>
+            <a class="btn btn-secondary" href="{{url('edit-task/'.$task['id'])}}">Edit</a>
+            <a class="btn btn-danger" href="{{url('delete-task/'.$task['id'])}}">Delete</a></td>
       </tr>
       {{-- @php
           $k=0;

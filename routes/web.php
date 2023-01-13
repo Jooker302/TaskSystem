@@ -79,3 +79,16 @@ Route::post('/ajax_more_question',[AdminController::class,'ajax_more_question'])
 Route::get('view-inspection-items/{id}',[AdminController::class,'view_inspection_items']);
 
 Route::get('view-questions/{id}',[AdminController::class,'view_questions']);
+
+Route::get('delete-task/{id}',[AdminController::class,'delete_task']);
+
+Route::get('edit-task/{id}',[AdminController::class,'edit_task']);
+
+Route::post('update-task',[AdminController::class,'update_task']);
+
+Route::get('edit-inspection-items/{id}',[AdminController::class,'edit_inspection_items']);
+
+Route::post('update-inspection-items',[AdminController::class,'update_inspection_items']);
+
+Route::get('final-approve/{id}',[AdminController::class,'final_approve']);
+

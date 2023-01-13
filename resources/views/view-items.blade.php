@@ -14,6 +14,7 @@
         <th scope="col">End Date</th>
         <th scope="col">Status</th>
         <th scope="col">Questions</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +42,9 @@
                 {{-- @endforeach --}}
             {{-- </ul> --}}
         </td>
+        <td>
+            <a class="btn btn-secondary" href="{{url('edit-inspection-items/'.$item->id)}}">Edit</a>
+          </td>
         {{-- <td><a class="btn btn-success" href="{{url('generate-spdf/'.$task['id'])}}">Export</a></td> --}}
       </tr>
       {{-- @php
@@ -82,6 +86,7 @@
         <td>the Bird</td>
         <td>@twitter</td>
       </tr> --}}
+
     </tbody>
   </table>
 

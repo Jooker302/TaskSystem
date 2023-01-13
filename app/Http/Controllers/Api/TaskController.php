@@ -49,7 +49,7 @@ class TaskController extends Controller
 
     public function store_complete_task(Request $request){
         $task = Task::where('id', $request->task_id)->where('user_id','like', '%'.$request->user_id.'%')->first();
-        $task->status = 1;
+        $task->status = 2;
         $task->update();
         return response()->json([
             'message' => 'Task Completed',

@@ -14,7 +14,7 @@
 
         <meta name="author" content="" />
 
-        <title>HGT Inspection Dashboard </title>
+        <title>HTG Inspection Dashboard </title>
 
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
@@ -32,7 +32,7 @@
 
             <!-- Navbar Brand-->
 
-            <a class="navbar-brand ps-3" href="">HGT INSPECTION</a>
+            <a class="navbar-brand ps-3" href="">HTG INSPECTION</a>
 
             <!-- Sidebar Toggle-->
 
