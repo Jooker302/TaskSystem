@@ -30,7 +30,7 @@
                 @php
                     $username = App\Models\User::find($user);
                 @endphp
-                {{$username->name}}
+                {{$username->name ?? ''}}
                 <br>
             @endforeach
         </td>
