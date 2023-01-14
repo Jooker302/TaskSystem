@@ -130,7 +130,7 @@
             // console.log(title);
 
         $.ajax({
-                url: "/ajax_task",
+                url: "ajax_task",
                 type: "POST",
                 data: {
                     '_token': '{{ csrf_token() }}',

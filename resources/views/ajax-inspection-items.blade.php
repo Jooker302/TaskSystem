@@ -125,7 +125,7 @@ $(document).ready(function(){
             // });
 
             $.ajax({
-                url: "/ajax_items",
+                url: "ajax_items",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "POST",
                 data: formimage,
@@ -177,7 +177,7 @@ $(document).ready(function(){
             // });
 
             $.ajax({
-                url: "/ajax_more_items",
+                url: "ajax_more_items",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "POST",
                 data: formimage,

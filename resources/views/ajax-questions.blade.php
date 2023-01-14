@@ -56,7 +56,7 @@ function finish(){
             // console.log(title);
 
         $.ajax({
-                url: "/ajax_question",
+                url: "ajax_question",
                 type: "POST",
                 data: {
                     '_token': '{{ csrf_token() }}',
@@ -96,7 +96,7 @@ function finish(){
             // console.log(title);
 
         $.ajax({
-                url: "/ajax_more_question",
+                url: "ajax_more_question",
                 type: "POST",
                 data: {
                     '_token': '{{ csrf_token() }}',
