@@ -7,6 +7,7 @@
       <tr>
         <th scope="col">Image</th>
         <th scope="col">Name</th>
+        <th scope="col">Trade</th>
         <th scope="col">Email</th>
         <th scope="col">Action</th>
         <th scope="col">Created At</th>
@@ -21,6 +22,7 @@
             <img style="height: 200px; width: 200px;" src="{{$user->image}}" alt="">
         </th>
         <td>{{$user->name}}</td>
+        <td>{{$user->trade ?? ''}}</td>
         <td>{{$user->email}}</td>
         <td>
             <a class="btn btn-primary" href="{{url('edit/'.$user->id)}}">Edit</a>

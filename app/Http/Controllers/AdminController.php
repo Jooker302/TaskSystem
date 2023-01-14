@@ -130,6 +130,7 @@ class AdminController extends Controller
         $user = User::find($request->id);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->trade = $request->trade;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
         if($request->has('image')){

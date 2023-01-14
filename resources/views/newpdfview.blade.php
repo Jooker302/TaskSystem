@@ -215,13 +215,22 @@
     <div class="attachment">
         <h3>Inspection Detail</h3>
     </div>
+    @foreach ($inspection_items as $items)
+
+
     <div class="Banner-section">
         <ul>
             <li>
+                <h3>Inspection Title</h3>
+                <p>{{$items->i_title}}</p>
                 <h3>Inspection Date</h3>
-                <p>14 jun 2022</p>
-                <h3>Point of Contract</h3>
-                <p>Emran Thampson</p>
+                <p>{{$items->start_date}}</p>
+                <h3>Assignee</h3>
+                <p>
+                    @foreach ($users as $user)
+                        {{$user->name}} ,
+                    @endforeach
+                </p>
 
             </li>
         </ul>
@@ -229,23 +238,24 @@
             <li>
 
 
-                <h3>assignee</h3>
-                <p>Tamara Devas</p>
+                {{-- <h3>Assignee</h3>
+                <p>Tamara Devas</p> --}}
+                <h3>Due Date</h3>
+                <p>{{$items->end_date}}</p>
                 <h3>Responsible Contractor</h3>
                 <p>HTG Engineering</p>
 
             </li>
         </ul>
-        <ul>
+        {{-- <ul>
             <li>
 
                 <!-- <h4></h4> -->
 
-                <h3>Due Date</h3>
-                <p>230-23-4-2</p>
+
 
             </li>
-        </ul>
+        </ul> --}}
         {{-- <ul>
             <li>
 
@@ -259,31 +269,63 @@
     <!--Plumbing Inspection--->
     <div class="plumbing" >
         <ul>
-            <h1>Plumbing Infrastructure</h1>
+            <h1>{{$items->i_title}} Question's</h1>
             <li style="text-align: right;">
 
-        <span>O Neutral</span>
-        <span>4 Pass</span>
-        <span>0 Fail</span>
-        <span>2 N/A</span>
+                @php
+                    $ques = App\Models\Question::where('inspection_item_id',$items->id)->get();
+                    $quest = $ques->count();
+                    $quespasst = $ques->where('q_status','pass')->count();
+                    $quesfailt = $ques->where('q_status','fail')->count();
+                    $quesnat = $ques->where('q_status','na')->count();
+                @endphp
+
+        {{-- <span>O Neutral</span> --}}
+        <span>{{$quespasst}} Pass</span>
+        <span>{{$quesfailt}} Fail</span>
+        <span>{{$quesnat}} N/A</span>
     </li>
 </ul>
     </div>
+
+
+    @foreach ($ques as $q)
+
+
      <div  class="Paragraph-Boxes">
     <div class="paragraph">
-        <p>1.1 Pipes are clearly visible not Damaged and not Covered by debaris (dart marvel gravel)<br>
-        Activity:1 Response Change 0 Attachments 0 Photos 0 Comments 0 Obersvations
+        <p>{{$q->question}}
         </p>
     </div>
     <div class="Boxes">
+        @if ($q->q_status == 'pass')
+        <label for="">Pass</label>
+        <input checked type="checkbox">
+        <label for="">Fail</label>
         <input type="checkbox">
+        <label for="">N.A</label>
         <input type="checkbox">
+        @elseif ($q->q_status == 'fail')
+        <label for="">Pass</label>
         <input type="checkbox">
+        <label for="">Fail</label>
+        <input checked type="checkbox">
+        <label for="">N.A</label>
+        <input type="checkbox">
+        @else
+        <label for="">Pass</label>
+        <input type="checkbox">
+        <label for="">Fail</label>
+        <input type="checkbox">
+        <label for="">N.A</label>
+        <input checked type="checkbox">
+        @endif
+
     </div>
 </div>
-<div style="margin-bottom:20px;" class="paragraph_bottom"><p>Emran Thompson (HTG Engineering) added 4 photos via mobile on 14 jun 2022 at 09.28AM -05</p></div>
+{{-- <div style="margin-bottom:20px;" class="paragraph_bottom"><p>Emran Thompson (HTG Engineering) added 4 photos via mobile on 14 jun 2022 at 09.28AM -05</p></div> --}}
     <!--End Plumbing Inspection-->
-    <div class="Paragraph-Boxes">
+    {{-- <div class="Paragraph-Boxes">
         <div class="paragraph">
             <p>1.2 All concelead work are left exposed untill Inpection<br>
                 Activity:1 Response Change 0 Attachments 0 Photos 0 Comments 0 Obersvations
@@ -295,14 +337,27 @@
             <input type="checkbox">
         </div>
     </div>
-    <div class="paragraph_bottom">
-        <p>Emran Thompson (HTG Engineering) responded with N/A on 14 jun 2022 at 09.26 AM -05</p>
-        <div class="img_main">
-            <div><img src="image/dreamstime_s_121494476.61f4523c9b17d.avif" alt=""></div>
-            <div><img src="image/water-pipes-ground-pit-trench-ditch-during-plumbing-construction-repairing_192985-1968.jpg" alt=""></div>
-        </div>
 
+--}}
+@php
+
+    $qimages = App\Models\QuestionImage::where('question_id',$q->id)->get();
+@endphp
+
+    <div class="paragraph_bottom">
+        {{-- <p>Emran Thompson (HTG Engineering) responded with N/A on 14 jun 2022 at 09.26 AM -05</p> --}}
+        @foreach ($qimages as $img)
+
+
+        <div class="img_main">
+            <div><img src="{{asset($img->image)}}" alt="No Image Found"></div>
+            {{-- <div><img src="image/water-pipes-ground-pit-trench-ditch-during-plumbing-construction-repairing_192985-1968.jpg" alt=""></div> --}}
+        </div>
+        @endforeach
     </div>
+    @endforeach
+
+    @endforeach
 </body>
 
 </html>
