@@ -42,6 +42,7 @@
                     Not Completed
                 @elseif($task->status == 1)
                     Completed
+                    <a class="btn btn-danger" href="{{url('final-unapprove/'.$task->id)}}">Reopen</a>
                 @else
                     <a class="btn btn-success" href="{{url('final-approve/'.$task->id)}}">Approve</a>
                     <a class="btn btn-danger" href="{{url('final-unapprove/'.$task->id)}}">Unapprove</a>
