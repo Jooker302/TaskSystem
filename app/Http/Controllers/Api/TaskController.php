@@ -135,14 +135,14 @@ class TaskController extends Controller
 
         // $task = Task::where('id',$request->task_id)->get();
 
-        $tasks = Task::find($request->task_id);
-        $ins = InspectionItem::where('task_id',$tasks->id)->get();
-        foreach($ins as $i){
-            $ins_id[] = $i->id;
-        }
-        $question = Question::whereIn('inspection_item_id',$ins_id)->get();
+        // $tasks = Task::find($request->task_id);
+        // $ins = InspectionItem::where('task_id',$tasks->id)->get();
+        // foreach($ins as $i){
+        //     $ins_id[] = $i->id;
+        // }
+        // $question = Question::whereIn('inspection_item_id',$ins_id)->get();
 
-        $taskfile=TaskFile::where('task_id',$tasks->id)->get();
+        // $taskfile=TaskFile::where('task_id',$tasks->id)->get();
         // dd($task);
         // foreach($task as $t){
         //     $tasks[$i]['id'] = $t->id;
@@ -160,15 +160,52 @@ class TaskController extends Controller
         //     $i++;
         // }
         // $taskfile=TaskFile::all();
+        $task = Task::find($id);
+
+        $users = User::whereIn('id', $task->user_id)->get();
+        // dd($users);
+
+        $inspection_items = InspectionItem::where('task_id',$id)->get();
+
+        foreach($inspection_items as $items){
+            $i_ids[] = $items->id;
+        }
+
+        $questions = Question::whereIn('inspection_item_id',$i_ids)->get();
+
+        $totalii = $inspection_items->count();
+
+        $totaliipass = $inspection_items->where('status','pass')->count();
+        $totaliifail = $inspection_items->where('status','fail')->count();
+        $totaliina = $inspection_items->where('status',null)->count();
+
+
+        // dd($totaliipass,$totaliifail,$totaliina);
+        // dd($task,$inspection_items,$questions);
 
         $data = [
-            'tasks'=>$tasks,
-            'taskfiles'=>$taskfile ,
-            'inspectionitem' => $ins,
-            'question' => $question,
-        ];
+                'task'=>$task,
+                // 'taskfiles'=>$taskfile ,
+                'inspection_items' => $inspection_items,
+                'questions' => $questions,
+                'totalii'=> $totalii,
+                'totaliipass'=> $totaliipass,
+                'totaliifail'=> $totaliifail,
+                'totaliina'=> $totaliina,
+                'users' => $users,
+            ];
 
-        $pdf = PDF::loadView('pdfview', $data);
+        // $pdf = PDF::loadView('newpdfview', $data);
+        // $pdf = PDF::loadView('pdfview', $data);
+        // return $pdf->download('Tasks.pdf');
+        // $data = [
+        //     'tasks'=>$tasks,
+        //     'taskfiles'=>$taskfile ,
+        //     'inspectionitem' => $ins,
+        //     'question' => $question,
+        // ];
+
+        $pdf = PDF::loadView('newpdfview', $data);
         // return $pdf->download('Tasks.pdf');
 
         // $pdf = PDF::loadView('pdfview', $data)->save('public/assets/pdf/tasks.pdf');
