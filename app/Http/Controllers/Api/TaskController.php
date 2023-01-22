@@ -234,9 +234,9 @@ class TaskController extends Controller
         $na = Question::where('inspection_item_id',$request->inspection_items_id)->where('q_status',null)->count();
         return response()->json([
             // 'message' => 'Saved',
-            'Passed' => $passed,
-            'Failed' => $failed,
-            'N.A' => $na,
+            'passed' => $passed,
+            'failed' => $failed,
+            'na' => $na,
             'code' => 200,
         ]);
     }
