@@ -160,12 +160,12 @@ class TaskController extends Controller
         //     $i++;
         // }
         // $taskfile=TaskFile::all();
-        $task = Task::find($id);
+        $task = Task::find($request->task_id);
 
         $users = User::whereIn('id', $task->user_id)->get();
         // dd($users);
 
-        $inspection_items = InspectionItem::where('task_id',$id)->get();
+        $inspection_items = InspectionItem::where('task_id',$request->task_id)->get();
 
         foreach($inspection_items as $items){
             $i_ids[] = $items->id;
